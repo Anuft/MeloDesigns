@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { CustomiseModal } from './components/CustomiseModal';
+import { AppointmentModal } from './components/AppointmentModal';
 import { ProductModal } from './components/ProductModal';
 import { ProductItem } from './types';
 
@@ -18,6 +19,7 @@ import { ArchivePage } from './components/ArchivePage';
 export function App() {
   const [currentPage, setCurrentPage] = useState<string>('home');
   const [isCustomiseModalOpen, setIsCustomiseModalOpen] = useState<boolean>(false);
+  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
 
   useEffect(() => {
@@ -73,6 +75,7 @@ export function App() {
             onNavigate={navigateTo}
             onOpenCustomiseModal={() => setIsCustomiseModalOpen(true)}
             onSelectProduct={(p) => setSelectedProduct(p)}
+            onOpenAppointment={() => setIsAppointmentModalOpen(true)}
           />
         );
     }
@@ -84,6 +87,7 @@ export function App() {
       <Navbar
         currentPage={currentPage}
         onNavigate={navigateTo}
+        onOpenAppointment={() => setIsAppointmentModalOpen(true)}
       />
 
       {/* Main Page View */}
@@ -103,6 +107,12 @@ export function App() {
       <CustomiseModal
         isOpen={isCustomiseModalOpen}
         onClose={() => setIsCustomiseModalOpen(false)}
+      />
+
+      {/* Amit Aggarwal Style Atelier Appointment Modal */}
+      <AppointmentModal
+        isOpen={isAppointmentModalOpen}
+        onClose={() => setIsAppointmentModalOpen(false)}
       />
 
       {/* Quick View Product Modal */}

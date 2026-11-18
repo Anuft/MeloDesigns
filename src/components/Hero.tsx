@@ -1,117 +1,100 @@
 import React from 'react';
-import { ArrowDown, MessageCircle, Sparkles, Compass } from 'lucide-react';
+import { ArrowDown, MessageCircle, Sparkles, Compass, Calendar, ArrowRight } from 'lucide-react';
 import { BOUTIQUE_INFO } from '../data/boutiqueData';
 import { openWhatsApp, WHATSAPP_MESSAGES } from '../utils/whatsapp';
 
 interface HeroProps {
-  onOpenCustomiseModal?: () => void;
-  onExploreCollections?: () => void;
+  onOpenCustomiseModal: () => void;
+  onExploreCollections: () => void;
+  onOpenAppointment?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ 
+export const Hero: React.FC<HeroProps> = ({
   onOpenCustomiseModal,
   onExploreCollections,
+  onOpenAppointment,
 }) => {
-  const handleExplore = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (onExploreCollections) {
-      onExploreCollections();
-    } else {
-      window.location.hash = '#collections';
-    }
-  };
-
   return (
-    <section id="home" className="relative min-h-[92vh] lg:min-h-screen flex items-center justify-center overflow-hidden bg-darkbrown">
-      {/* Background Editorial Image with subtle zoom effect */}
+    <section className="relative min-h-[92vh] lg:min-h-[96vh] flex items-center justify-center overflow-hidden bg-[#181310] text-ivory">
+      {/* Editorial High-Fashion Background Image */}
       <div className="absolute inset-0 z-0">
         <img
           src="/images/melo_enhanced/hero_mint_melo.jpg"
-          alt="Bespoke Couture Creation - MELO DESIGNS Kasaragod"
-          className="w-full h-full object-cover object-right filter brightness-[0.92] contrast-[1.03] transform scale-100 animate-slow-zoom"
-          loading="eager"
+          alt="MELO DESIGNS Bespoke Haute Couture Couple"
+          className="w-full h-full object-cover object-top filter brightness-[0.78] contrast-[1.05] scale-100 hover:scale-105 transition-transform duration-1000 ease-out"
         />
-        {/* Luxury Vignette & Multi-layer Overlay: deep elegant contrast on left for typography, open on right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-darkbrown/95 via-darkbrown/65 to-darkbrown/15" />
-        <div className="absolute inset-0 bg-gradient-to-t from-darkbrown/90 via-transparent to-darkbrown/40" />
+        {/* Architectural Vignette Gradient (Amit Aggarwal aesthetic) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#181310]/90 via-[#181310]/50 to-[#181310]/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#181310] via-transparent to-[#181310]/40" />
       </div>
 
-      {/* Decorative Atelier Border Frames */}
-      <div className="absolute inset-4 sm:inset-8 border border-white/10 pointer-events-none z-10 hidden md:block" />
+      {/* Content Overlay */}
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-12 py-20 lg:py-28 flex flex-col justify-center items-center text-center">
+        
+        {/* Atelier Collection Tag */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#E6D7C8] text-[10px] sm:text-[11px] uppercase tracking-[0.3em] font-light mb-6 sm:mb-8 animate-fade-in">
+          <span className="w-1.5 h-1.5 rounded-full bg-beige" />
+          <span>HAUTE COUTURE • KASARAGOD ATELIER</span>
+        </div>
 
-      {/* Content Container */}
-      <div className="container relative z-20 mx-auto px-6 sm:px-10 lg:px-16 py-20 lg:py-28 text-white">
-        <div className="max-w-3xl space-y-6 sm:space-y-8 animate-fade-up">
-          {/* Subtle Tagline / Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-beige text-xs tracking-[0.25em] uppercase font-light">
-            <Sparkles className="w-3.5 h-3.5 text-beige" />
-            <span>Kasaragod Couture & Bespoke Atelier</span>
+        {/* Main Editorial Headline */}
+        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-normal uppercase tracking-[0.08em] max-w-5xl leading-[1.05] drop-shadow-md">
+          STYLE THAT SPEAKS <br />
+          <span className="italic font-light text-[#E6D7C8]">YOUR STORY.</span>
+        </h1>
+
+        {/* Subtitle */}
+        <p className="mt-6 sm:mt-8 max-w-2xl text-xs sm:text-sm md:text-base text-ivory/85 font-light tracking-[0.1em] leading-relaxed drop-shadow">
+          Discover the art of customized fashion, sculpted drapes, and handcrafted heirlooms, thoughtfully tailored for ladies and kids in Thayalangadi, Kasaragod.
+        </p>
+
+        {/* Luxury CTA Actions */}
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
+          <button
+            onClick={onExploreCollections}
+            className="btn-shine w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-darkbrown text-xs uppercase tracking-[0.25em] font-medium hover:bg-[#E6D7C8] transition-all shadow-lg flex items-center justify-center gap-2"
+          >
+            <span>Explore Couture</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+
+          <button
+            onClick={onOpenAppointment || onOpenCustomiseModal}
+            className="w-full sm:w-auto px-8 py-3.5 rounded-full border border-white/60 text-white text-xs uppercase tracking-[0.25em] font-medium hover:bg-white/15 backdrop-blur-sm transition-all flex items-center justify-center gap-2"
+          >
+            <Calendar className="w-3.5 h-3.5 text-[#E6D7C8]" />
+            <span>Book Appointment</span>
+          </button>
+        </div>
+
+        {/* Atelier Quality Ribbon at Bottom */}
+        <div className="mt-14 sm:mt-20 pt-8 border-t border-white/15 w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div className="space-y-1">
+            <span className="block font-serif text-lg sm:text-xl text-[#E6D7C8] font-light">100% Bespoke</span>
+            <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-ivory/70 font-light">Custom Fit Drafting</span>
           </div>
-
-          {/* Main Headline */}
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] font-normal text-ivory">
-            STYLE THAT <br className="hidden sm:inline" />
-            <span className="italic font-light text-beige">SPEAKS YOUR</span> <br />
-            STORY.
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-base sm:text-lg md:text-xl text-beige/90 font-light max-w-xl leading-relaxed tracking-wide">
-            {BOUTIQUE_INFO.heroSubtitle}
-          </p>
-
-          {/* Dual Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4 sm:pt-6">
-            <button
-              onClick={handleExplore}
-              className="btn-shine inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-ivory text-darkbrown font-medium text-xs sm:text-sm uppercase tracking-[0.2em] shadow-luxury hover:bg-beige transition-all duration-300 transform hover:-translate-y-0.5"
-            >
-              <Compass className="w-4 h-4 text-mocha" />
-              <span>EXPLORE COLLECTION</span>
-            </button>
-
-            <button
-              onClick={() => {
-                if (onOpenCustomiseModal) {
-                  onOpenCustomiseModal();
-                } else {
-                  openWhatsApp(WHATSAPP_MESSAGES.generalEnquiry());
-                }
-              }}
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-transparent border border-beige/60 text-ivory font-medium text-xs sm:text-sm uppercase tracking-[0.2em] hover:bg-white/10 hover:border-ivory transition-all duration-300 backdrop-blur-sm"
-            >
-              <MessageCircle className="w-4 h-4 text-beige" />
-              <span>ENQUIRE NOW</span>
-            </button>
+          <div className="space-y-1">
+            <span className="block font-serif text-lg sm:text-xl text-[#E6D7C8] font-light">Hand Artistry</span>
+            <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-ivory/70 font-light">Zari & Cutwork Detailing</span>
           </div>
-
-          {/* Editorial Markers */}
-          <div className="grid grid-cols-3 gap-6 pt-10 sm:pt-14 border-t border-white/15 max-w-lg text-ivory">
-            <div>
-              <p className="font-serif text-xl sm:text-2xl text-beige font-light">100%</p>
-              <p className="text-[10px] sm:text-xs uppercase tracking-wider text-white/70">Custom Tailored</p>
-            </div>
-            <div>
-              <p className="font-serif text-xl sm:text-2xl text-beige font-light">Bespoke</p>
-              <p className="text-[10px] sm:text-xs uppercase tracking-wider text-white/70">Ladies & Kids</p>
-            </div>
-            <div>
-              <p className="font-serif text-xl sm:text-2xl text-beige font-light">Kerala</p>
-              <p className="text-[10px] sm:text-xs uppercase tracking-wider text-white/70">Thayalangadi</p>
-            </div>
+          <div className="space-y-1">
+            <span className="block font-serif text-lg sm:text-xl text-[#E6D7C8] font-light">Ladies & Kids</span>
+            <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-ivory/70 font-light">Mom & Daughter Sets</span>
+          </div>
+          <div className="space-y-1">
+            <span className="block font-serif text-lg sm:text-xl text-[#E6D7C8] font-light">Kasaragod Atelier</span>
+            <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-ivory/70 font-light">Worldwide Delivery</span>
           </div>
         </div>
+
       </div>
 
-      {/* Floating Scroll Indicator */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
-        <button
-          onClick={handleExplore}
-          className="flex flex-col items-center gap-1.5 text-beige/80 hover:text-beige transition-colors text-[10px] tracking-[0.3em] uppercase"
-        >
-          <span>Scroll</span>
-          <ArrowDown className="w-4 h-4 animate-bounce text-beige" />
-        </button>
+      {/* Floating subtle scroll indicator */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
+        onClick={onExploreCollections}
+      >
+        <span className="text-[8.5px] uppercase tracking-[0.3em] font-light text-ivory">Explore</span>
+        <ArrowDown className="w-3.5 h-3.5 text-beige animate-bounce" />
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, MessageCircle, Phone, MapPin, Sparkles } from 'lucide-react';
+import { Menu, X, MessageCircle, MapPin, Sparkles, Calendar, ChevronRight } from 'lucide-react';
 import { InstagramIcon } from './Icons';
 import { BOUTIQUE_INFO } from '../data/boutiqueData';
 import { openWhatsApp, WHATSAPP_MESSAGES } from '../utils/whatsapp';
@@ -7,11 +7,13 @@ import { openWhatsApp, WHATSAPP_MESSAGES } from '../utils/whatsapp';
 interface NavbarProps {
   currentPage: string;
   onNavigate: (page: string) => void;
+  onOpenAppointment?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentPage,
   onNavigate,
+  onOpenAppointment,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,13 +39,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { label: 'Home', id: 'home' },
-    { label: 'Collections', id: 'collections' },
-    { label: 'Customise', id: 'customise' },
-    { label: 'Archive', id: 'archive' },
-    { label: 'About', id: 'about' },
-    { label: 'Gallery', id: 'gallery' },
-    { label: 'Contact', id: 'contact' },
+    { label: 'Couture', id: 'collections' },
+    { label: 'Bespoke Custom', id: 'customise' },
+    { label: 'Lookbook Archive', id: 'archive' },
+    { label: 'The Atelier', id: 'about' },
+    { label: 'Campaigns', id: 'gallery' },
+    { label: 'Visit Us', id: 'contact' },
   ];
 
   const handleLinkClick = (id: string) => {
@@ -53,102 +54,109 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      {/* Top subtle announcement bar */}
-      <div className="bg-darkbrown text-ivory text-[10px] sm:text-xs py-1.5 px-4 tracking-wider uppercase flex justify-between items-center transition-all">
+      {/* Top Haute Couture Ticker (Amit Aggarwal inspired) */}
+      <div className="bg-[#181310] text-[#E6D7C8] text-[9.5px] sm:text-[10.5px] py-2 px-4 tracking-[0.25em] uppercase flex justify-between items-center transition-all border-b border-[#302520]">
         <div className="container mx-auto flex justify-between items-center">
-          <span className="flex items-center gap-1.5 opacity-90 mx-auto sm:mx-0 whitespace-nowrap">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-beige animate-pulse" />
-            Bespoke Ladieswear & Kidswear Atelier • Kasaragod, Kerala
-          </span>
-          <div className="hidden sm:flex items-center gap-6 opacity-85 text-[11px] whitespace-nowrap">
+          <div className="flex items-center gap-2 mx-auto sm:mx-0 whitespace-nowrap">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
+            <span className="font-light">
+              THE BRIDAL & COUTURE EDIT <span className="opacity-40">|</span> NOW LIVE AT KASARAGOD ATELIER
+            </span>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-6 opacity-80 text-[10px] whitespace-nowrap font-light">
             <a 
               href={BOUTIQUE_INFO.instagramUrl} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover:text-beige transition-colors flex items-center gap-1"
+              className="hover:text-white transition-colors flex items-center gap-1.5"
             >
-              <InstagramIcon className="w-3 h-3" />
+              <InstagramIcon className="w-3 h-3 text-[#E6D7C8]" />
               <span>@melo.designss</span>
             </a>
-            <span className="opacity-40">|</span>
+            <span className="opacity-30">•</span>
             <span className="flex items-center gap-1">
-              <MapPin className="w-3 h-3" />
+              <MapPin className="w-3 h-3 text-beige" />
               Thayalangadi, Kasaragod
             </span>
           </div>
         </div>
       </div>
 
-      {/* Sticky Main Navigation */}
+      {/* Main High-Fashion Navigation */}
       <header
         className={`sticky top-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#F7F2EC]/98 backdrop-blur-md shadow-luxury py-2.5 sm:py-3 border-b border-beige/60'
-            : 'bg-[#F7F2EC] py-3.5 sm:py-4 border-b border-beige/40'
+            ? 'bg-[#F7F2EC]/95 backdrop-blur-md shadow-sm border-b border-beige/60 py-3'
+            : 'bg-[#F7F2EC] border-b border-beige/40 py-4 sm:py-5'
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            {/* Brand Logo */}
-            <button
+          <div className="flex items-center justify-between gap-4">
+            
+            {/* Left/Center Wordmark (Amit Aggarwal Architectural Aesthetic) */}
+            <div 
               onClick={() => handleLinkClick('home')}
-              className="group flex flex-col items-start focus:outline-none text-left shrink-0"
+              className="cursor-pointer group flex flex-col items-start transition-opacity hover:opacity-90 flex-shrink-0"
             >
-              <span className="font-serif text-xl sm:text-2xl lg:text-2xl tracking-[0.18em] xl:tracking-[0.22em] font-medium text-darkbrown uppercase transition-colors group-hover:text-mocha whitespace-nowrap">
+              <span className="font-serif text-2xl sm:text-3xl text-darkbrown tracking-[0.22em] uppercase font-normal leading-none group-hover:text-mocha transition-colors">
                 MELO DESIGNS
               </span>
-              <span className="text-[8px] sm:text-[9px] tracking-[0.28em] text-mocha uppercase font-sans font-light -mt-0.5 whitespace-nowrap">
-                Bespoke Atelier • Kasaragod
+              <span className="text-[9px] uppercase tracking-[0.4em] text-mocha/80 font-light mt-1">
+                HAUTE COUTURE • KASARAGOD
               </span>
-            </button>
+            </div>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-3.5 xl:space-x-6">
+            <nav className="hidden lg:flex items-center gap-7 xl:gap-9">
               {navLinks.map((link) => {
                 const isActive = currentPage === link.id;
                 return (
                   <button
                     key={link.id}
                     onClick={() => handleLinkClick(link.id)}
-                    className={`whitespace-nowrap text-[11px] xl:text-xs uppercase tracking-[0.14em] xl:tracking-[0.2em] font-medium transition-all duration-200 relative py-1 flex items-center gap-1 ${
+                    className={`text-[11px] uppercase tracking-[0.22em] font-light transition-all relative py-1 ${
                       isActive
-                        ? 'text-mocha font-semibold after:w-full'
-                        : 'text-darkbrown/85 hover:text-mocha after:w-0'
-                    } after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:bg-mocha hover:after:w-full after:transition-all after:duration-300`}
+                        ? 'text-darkbrown font-medium'
+                        : 'text-darkbrown/70 hover:text-darkbrown'
+                    }`}
                   >
                     <span>{link.label}</span>
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-darkbrown" />
+                    )}
                   </button>
                 );
               })}
             </nav>
 
-            {/* Action CTAs */}
-            <div className="hidden lg:flex items-center gap-3 shrink-0">
-              <button
-                onClick={() => openWhatsApp(WHATSAPP_MESSAGES.generalEnquiry())}
-                className="btn-shine group inline-flex items-center gap-2 px-3.5 py-2 xl:px-4 xl:py-2.5 rounded-full bg-darkbrown text-ivory text-[11px] xl:text-xs uppercase tracking-[0.14em] xl:tracking-[0.16em] font-medium shadow-sm hover:bg-mocha hover:shadow-luxury transition-all duration-300 active:scale-95 whitespace-nowrap"
-                title="Chat directly on WhatsApp"
-              >
-                <MessageCircle className="w-3.5 h-3.5 text-beige group-hover:scale-110 transition-transform" />
-                <span>WhatsApp Enquiry</span>
-              </button>
-            </div>
+            {/* Right Action Buttons */}
+            <div className="flex items-center gap-3 flex-shrink-0">
+              {/* "Book Appointment" (Amit Aggarwal Signature Action) */}
+              {onOpenAppointment && (
+                <button
+                  onClick={onOpenAppointment}
+                  className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-darkbrown/60 text-darkbrown hover:bg-darkbrown hover:text-ivory text-[10px] uppercase tracking-[0.2em] font-medium transition-all"
+                >
+                  <Calendar className="w-3 h-3" />
+                  <span>Book Appointment</span>
+                </button>
+              )}
 
-            {/* Mobile / Tablet Actions (< lg) */}
-            <div className="flex items-center gap-2 lg:hidden">
+              {/* WhatsApp Concierge */}
               <button
-                onClick={() => openWhatsApp(WHATSAPP_MESSAGES.generalEnquiry())}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-darkbrown text-ivory text-[10px] uppercase tracking-wider hover:bg-mocha transition-colors whitespace-nowrap"
-                aria-label="WhatsApp Enquiry"
+                onClick={() => openWhatsApp(WHATSAPP_MESSAGES.general)}
+                className="btn-shine inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full bg-darkbrown text-ivory text-[10.5px] uppercase tracking-[0.18em] font-medium hover:bg-mocha transition-all shadow-sm"
               >
-                <MessageCircle className="w-3.5 h-3.5 text-beige" />
-                <span className="hidden sm:inline">WhatsApp</span>
+                <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="hidden sm:inline">Concierge</span>
               </button>
+
+              {/* Mobile Menu Hamburger */}
               <button
-                type="button"
                 onClick={() => setMobileMenuOpen(true)}
-                className="p-2 rounded-md text-darkbrown hover:text-mocha hover:bg-beige/40 transition-colors focus:outline-none"
-                aria-label="Open navigation menu"
+                className="lg:hidden p-2 rounded-lg text-darkbrown hover:bg-beige/40 transition-colors"
+                aria-label="Open mobile navigation menu"
               >
                 <Menu className="w-6 h-6" />
               </button>
@@ -157,87 +165,89 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </header>
 
-      {/* Mobile Drawer Menu: Fully Opaque Solid Background with High Z-Index */}
+      {/* Mobile Drawer (Solid, Opaque Luxury Menu) */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] lg:hidden flex flex-col justify-between bg-[#F7F2EC] p-6 sm:p-8 overflow-y-auto animate-fade-in">
-          {/* Header Inside Drawer */}
-          <div className="space-y-6">
-            <div className="flex items-center justify-between pb-5 border-b border-beige/70">
-              <div className="flex flex-col items-start text-left">
-                <span className="font-serif text-2xl tracking-[0.2em] font-medium text-darkbrown uppercase">
-                  MELO DESIGNS
-                </span>
-                <span className="text-[9px] tracking-[0.3em] text-mocha uppercase font-sans font-light">
-                  Bespoke Atelier • Kasaragod
-                </span>
+        <div className="fixed inset-0 z-50 lg:hidden flex">
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-darkbrown/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+
+          {/* Drawer Content */}
+          <div className="relative ml-auto w-full max-w-xs sm:max-w-sm bg-[#F7F2EC] h-full shadow-2xl flex flex-col justify-between p-6 sm:p-8 z-10 border-l border-beige/60 overflow-y-auto">
+            {/* Top Bar with Brand & Close Button */}
+            <div>
+              <div className="flex items-center justify-between pb-6 border-b border-beige/60">
+                <div>
+                  <span className="font-serif text-xl text-darkbrown tracking-[0.2em] uppercase block">
+                    MELO DESIGNS
+                  </span>
+                  <span className="text-[8.5px] tracking-[0.3em] uppercase text-mocha/70 block mt-0.5">
+                    HAUTE COUTURE • KASARAGOD
+                  </span>
+                </div>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-full bg-white hover:bg-beige/50 text-darkbrown transition-colors shadow-sm"
+                  aria-label="Close menu"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
+
+              {/* Navigation Items */}
+              <nav className="py-6 space-y-4">
+                {navLinks.map((link) => {
+                  const isActive = currentPage === link.id;
+                  return (
+                    <button
+                      key={link.id}
+                      onClick={() => handleLinkClick(link.id)}
+                      className={`w-full flex items-center justify-between text-left py-2 px-3 rounded-lg text-xs uppercase tracking-[0.25em] transition-all ${
+                        isActive
+                          ? 'bg-beige/50 text-darkbrown font-semibold'
+                          : 'text-darkbrown/80 hover:text-darkbrown hover:bg-beige/20'
+                      }`}
+                    >
+                      <span>{link.label}</span>
+                      <ChevronRight className="w-3.5 h-3.5 opacity-40" />
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Bottom Actions in Drawer */}
+            <div className="pt-6 border-t border-beige/60 space-y-3">
+              {onOpenAppointment && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenAppointment();
+                  }}
+                  className="w-full py-3 px-4 rounded-xl border border-darkbrown text-darkbrown text-xs uppercase tracking-[0.2em] font-medium flex items-center justify-center gap-2 hover:bg-darkbrown hover:text-ivory transition-all"
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span>Book Appointment</span>
+                </button>
+              )}
+
               <button
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-full bg-white/70 border border-beige/60 text-darkbrown hover:text-mocha hover:bg-beige/30 transition-colors"
-                aria-label="Close menu"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openWhatsApp(WHATSAPP_MESSAGES.general);
+                }}
+                className="w-full py-3 px-4 rounded-xl bg-darkbrown text-ivory text-xs uppercase tracking-[0.2em] font-medium flex items-center justify-center gap-2 hover:bg-mocha transition-all"
               >
-                <X className="w-5 h-5" />
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                <span>WhatsApp Concierge</span>
               </button>
+
+              <div className="pt-2 text-[10px] text-mocha/70 text-center tracking-wide font-light">
+                Thayalangadi, Kasaragod • Kerala 671121
+              </div>
             </div>
-
-            {/* Nav list */}
-            <nav className="flex flex-col space-y-2 pt-2">
-              {navLinks.map((link) => {
-                const isActive = currentPage === link.id;
-                return (
-                  <button
-                    key={link.id}
-                    onClick={() => handleLinkClick(link.id)}
-                    className={`font-serif text-2xl text-left tracking-wider py-2.5 px-3 rounded-xl transition-all flex items-center justify-between ${
-                      isActive 
-                        ? 'bg-beige/40 text-mocha font-medium pl-4' 
-                        : 'text-darkbrown hover:text-mocha hover:bg-white/50'
-                    }`}
-                  >
-                    <span>{link.label}</span>
-                    <span className="text-xs font-sans text-mocha opacity-70">→</span>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-
-          {/* Drawer Footer Actions */}
-          <div className="mt-8 space-y-4 pt-6 border-t border-beige/70">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                openWhatsApp(WHATSAPP_MESSAGES.generalEnquiry());
-              }}
-              className="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-darkbrown text-ivory rounded-full text-xs uppercase tracking-widest font-medium hover:bg-mocha transition-all shadow-md active:scale-98"
-            >
-              <MessageCircle className="w-4 h-4 text-beige" />
-              <span>WhatsApp Enquiry</span>
-            </button>
-
-            <div className="grid grid-cols-2 gap-2 text-xs text-mocha pt-1">
-              <a
-                href={BOUTIQUE_INFO.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-beige/60 bg-white/60 hover:bg-white transition-colors"
-              >
-                <InstagramIcon className="w-3.5 h-3.5 text-mocha" />
-                <span>@melo.designss</span>
-              </a>
-              <a
-                href={`tel:${BOUTIQUE_INFO.phoneNumber}`}
-                className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-beige/60 bg-white/60 hover:bg-white transition-colors"
-              >
-                <Phone className="w-3.5 h-3.5 text-mocha" />
-                <span>Call Atelier</span>
-              </a>
-            </div>
-
-            <p className="text-[10px] text-center text-mocha/80 tracking-wider">
-              {BOUTIQUE_INFO.address}
-            </p>
           </div>
         </div>
       )}
